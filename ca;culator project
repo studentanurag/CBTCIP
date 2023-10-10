@@ -1,0 +1,174 @@
+#include<iostream>
+#include<math.h>
+
+using namespace std;
+
+void add();
+void sub();
+void mul();
+void div();
+void square();
+void factrl();
+void power();
+void sqroot();
+
+main()
+{
+    int ch;
+    cout<<"\t\t\t*-*-*-*- Welcome to the Digital Calculator *-*-*-*-\n\n";
+
+    do
+    {
+        cout<<"\n\nChoose the operation you want to perform:";
+        cout<<"\n1.ADDITION:";
+        cout<<"\n2.SUBTRACTION:";
+        cout<<"\n3.MULTIPLICATION:";
+        cout<<"\n4.DIVISION:";
+        cout<<"\n5.SQUARE OF A NUMBER:";
+        cout<<"\n6.FACTORIAL OF A NUMBER:";
+        cout<<"\n7.NUMBER TO ANY POWER:";
+        cout<<"\n8.SQUARE ROOT OF A NUMBER:";
+        cout<<"\n9.EXIT";
+        cout<<"\n\nENTER YOUR CHOICE:";
+        cin>>ch;
+
+        switch(ch)
+        {
+            case 1:
+                add();
+                break;
+            case 2:
+                sub();
+                break;
+            case 3:
+                mul();
+                break;
+            case 4:
+                div();
+                break;
+            case 5:
+                square();
+                break;
+            case 6:
+                factrl();
+                break;
+            case 7:
+                power();
+                break;
+            case 8:
+                sqroot();
+                break;
+            case 9:
+                break;
+            default:
+                cout<<"You entered an invalid choice";
+                break;
+        }
+    }while(ch!=9);
+}
+
+void add()
+{
+    int a,b,c;
+    cout<<"\nEnter value of a: ";
+    cin>>a;
+    cout<<"Enter value of b:";
+    cin>>b;
+    c=a+b;
+    cout<<"-------------------------------\n";
+    cout<<"Addition of "<<a<<" and "<<b<<" is "<<c;
+    cout<<"\n-------------------------------\n";
+}
+
+void sub()
+{
+    int a,b,c;
+    cout<<"\nEnter value of a: ";
+    cin>>a;
+    cout<<"Enter value of b:";
+    cin>>b;
+    c=a-b;
+    cout<<"-------------------------------\n";
+    cout<<"Subtraction of "<<a<<" and "<<b<<" is "<<c;
+    cout<<"\n-------------------------------\n";
+ }
+
+void mul()
+{
+    int a,b,c;
+    cout<<"\nEnter value of a: ";
+    cin>>a;
+    cout<<"Enter value of b:";
+    cin>>b;
+    c=a*b;
+    cout<<"-------------------------------------\n";
+    cout<<"Multiplication of "<<a<<" and "<<b<<" is "<<c;
+    cout<<"\n-------------------------------------\n";
+}
+
+void div()
+{
+    float a,b,c;
+    cout<<"\nEnter value of a: ";
+    cin>>a;
+    cout<<"Enter value of b:";
+    cin>>b;
+    if(b==0)
+    {
+        cout<<"\nDivisor cannot be zero"<<endl<<"Please enter a valid divisor\n\n"<<"Value of b:";
+        cin>>b;
+    }
+    c=a/b;
+    cout<<"-------------------------------\n";
+    cout<<"Division of "<<a<<" and "<<b<<" is "<<c;
+    cout<<"\n-------------------------------\n";
+ }
+
+void square()
+{
+    double a,c;
+    cout<<"\nEnter value of base: ";
+    cin>>a;
+    c=pow(a,2);
+    cout<<"-------------------------------\n";
+    cout<<"Square of "<<a<<" is "<<c;
+    cout<<"\n-------------------------------\n";
+}
+
+void factrl()
+{
+    int n,i,f=1;
+    cout<<"\nEnter value of n: ";
+    cin>>n;
+    for(i=n;i>=1;--i)
+    {
+        f=f*i;
+    }
+    cout<<"-------------------------------\n";
+    cout<<"Factorial of "<<n<<" is "<<f;
+    cout<<"\n-------------------------------\n";
+}
+
+void power()
+{
+    double b,p,c;
+    cout<<"\nEnter value of base: ";
+    cin>>b;
+    cout<<"Enter value of power:";
+    cin>>p;
+    c=pow(b,p);
+    cout<<"-------------------------------\n";
+    cout<<b<<" to the power "<<p<<" is "<<c;
+    cout<<"\n-------------------------------\n";
+}
+
+void sqroot()
+{
+    double a,c;
+    cout<<"\nEnter the number: ";
+    cin>>a;
+    c=sqrt(a);
+    cout<<"-------------------------------\n";
+    cout<<"Square root of "<<a<<" is "<<c;
+    cout<<"\n-------------------------------\n";
+}
