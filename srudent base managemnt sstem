@@ -1,0 +1,248 @@
+ #include<iostream>
+#include<stdio.h>
+#include<fstream>
+using namespace std;
+
+class student
+{
+    int rno,rgno,dob,cls;
+    int pm,cm,mm,com,em,tm;
+    char name[20],fname[20],addrs[40];
+    float marks[5],percnt;
+    char grade;
+    public:
+        void getdata();
+        void acad_data();
+        void display();
+        int getrno()
+        {
+            return rno;
+        }
+
+}s;
+
+void student::getdata()
+{
+    cout<<"Enter student registration number:";
+    cin>>rgno;
+    cout<<"Enter student roll number:";
+    cin>>rno;
+    fflush(stdin);
+    cout<<"Enter student name:";
+    gets(name);
+    cout<<"Enter student's father name:";
+    gets(fname);
+    cout<<"Enter student date of birth:";
+    cin>>dob;
+    fflush(stdin);
+    cout<<"Enter student address:";
+    gets(addrs);
+    cout<<"Enter student class:";
+    cin>>cls;
+}
+
+void student::acad_data()
+{
+    int i;
+    cout<<"Enter student Physics marks:";
+    cin>>pm;
+    cout<<"Enter student Chemistry marks:";
+    cin>>cm;
+    cout<<"Enter student Maths marks:";
+    cin>>mm;
+    cout<<"Enter student Computer marks:";
+    cin>>com;
+    cout<<"Enter student English marks:";
+    cin>>em;
+    tm=pm+cm+mm+com+em;
+    percnt=tm/5;
+
+    if(percnt>=90)
+        {
+            grade='A';
+        }
+        else if(percnt>=80)
+        {
+            grade='B';
+        }
+        else if(percnt>=70)
+        {
+            grade='C';
+        }
+        else if(percnt>=60)
+        {
+            grade='D';
+        }
+        else if(percnt>=50)
+        {
+            grade='D';
+        }
+        else
+        {
+            grade='F';
+        }
+}
+
+void student::display()
+{
+    cout<<"\nStudent Registration number :"<<rgno;
+    cout<<"\nStudent Roll number         :"<<rno;
+    cout<<"\nStudent Name                :"<<name;
+    cout<<"\nStudent Father name         :"<<fname;
+    cout<<"\nStudent Date of Birth       :"<<dob;
+    cout<<"\nStudent Address             :"<<addrs;
+    cout<<"\nStudent Class               :"<<cls;
+    cout<<"\nStudent Grade               :"<<grade;
+}
+
+void insrt();
+void srch();
+void update();
+void del();
+void display();
+
+int main()
+{
+    fstream file;
+    int ch;
+    cout<<"\t\t\t*-*-*-*-*-*-STUDENT RECORD MANAGEMENT SYSTEM -*-*-*-*-*-*";
+    do
+    {
+        cout<<"\n\nChoose the option:\n";
+        cout<<"\n1.INSERT RECORD";
+        cout<<"\n2.SEARCH RECORD";
+        cout<<"\n3.UPDATE RECORD";
+        cout<<"\n4.DELETE RECORD";
+        cout<<"\n5.DISPLAY ALL RECORDS";
+        cout<<"\n6.EXIT\n";
+        cout<<"\n\nEnter your choice :";
+        cin>>ch;
+        switch(ch)
+        {
+            case 1:
+                insrt();
+                break;
+            case 2:
+                srch();
+                break;
+            case 3:
+                update();
+                break;
+            case 4:
+                del();
+                break;
+            case 5:
+                display();
+                break;
+            case 6:
+                break;
+            default:
+                cout<<"You entered an invalid choice";
+                break;
+        }
+    }while(ch!=6);
+
+}
+
+void insrt()
+{
+    fstream file;
+    file.open("student.dat",ios::app|ios::binary);
+    char ans='y';
+    while(ans=='y' || ans=='Y')
+    {
+        s.getdata();
+        s.acad_data();
+        file.write((char*)&s,sizeof(s));
+        cout<<"Want to insert more records(y/n):";
+        cin>>ans;
+    }
+    file.close();
+}
+
+void srch()
+{
+    fstream file;
+    file.open("student.dat",ios::in|ios::binary);
+    int rn,flag=0;
+    cout<<"Enter roll number to be searched:";
+    cin>>rn;
+    while(file.read((char*)&s,sizeof(s)))
+    {
+        if(rn==s.getrno())
+        {
+            s.display();
+            flag=1;
+            break;
+        }
+    }
+    if(flag==0)
+    {
+        cout<<"\nRecord not found\n";
+    }
+    file.close();
+}
+
+void update()
+{
+   fstream file;
+   file.open("student.dat",ios::in|ios::in|ios::binary);
+   int rn,flag=0;
+   cout<<"Enter roll number to be updated:";
+   cin>>rn;
+   while(file.read((char*)&s,sizeof(s)))
+   {
+       if(rn==s.getrno())
+       {
+           s.display();
+           s.getdata();
+           file.seekg(-1*sizeof(s),ios::cur);
+           file.write((char*)&s,sizeof(s));
+           break;
+       }
+   }
+   file.close();
+}
+[29/09, 12:30 AM] Pandey: void del()
+{
+    fstream file,file1;
+    file.open("student.dat",ios::in|ios::binary);
+    file1.open("temp.dat",ios::out|ios::binary);
+    int rn,flag=0;
+    cout<<"Enter roll numer to be deleted:";
+    cin>>rn;
+    while(file.read((char*)&s,sizeof(s)))
+   {
+       if(rn!=s.getrno())
+       {
+           file1.write((char*)&s,sizeof(s));
+       }
+   }
+   file.close();
+   file1.close();
+   remove("student.dat");
+   rename("temp.dat","student.dat");
+   cout<<"\nThe selected record was deleted";
+}
+
+void display()
+{
+    fstream file;
+    int flag=0;
+    file.open("student.dat",ios::in | ios::binary);
+    cout<<"-----------------------------------";
+    cout<<"\nTHE STORED RECORDS ARE:\n";
+    cout<<"-----------------------------------";
+    while(file.read((char*)&s,sizeof(s)))
+    {   flag=1;
+        s.display();
+        cout<<"\n";
+        cout<<"-----------------------------------";
+    }
+    if(flag==0)
+        {
+          cout<<"\nNO RECORDS";
+        }
+file.close();
+
+    }
